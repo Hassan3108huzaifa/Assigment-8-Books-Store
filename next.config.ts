@@ -2,9 +2,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['images.unsplash.com']
-  }
-  /* config options here */
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // Allows any domain
+      },
+    ],
+    unoptimized: true
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;

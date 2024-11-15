@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, X } from "lucide-react"
+import ImageLoader from '@/components/ImageLoader'
 
 interface BookProps {
     id: number
@@ -18,13 +19,17 @@ export default function BookCard({ title, desc, author, available, image }: Book
     return (
         <Card className="w-full max-w-sm overflow-hidden transition-all duration-300 hover:shadow-lg">
             <div className="relative h-64 overflow-hidden">
-                <Image
-                    src={image}
-                    alt={title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-300 hover:scale-110"
-                />
+                {image ? (
+                    <Image
+                        src={image}
+                        alt={title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="transition-transform duration-300 hover:scale-110"
+                    />
+                ) : (
+                    <div><ImageLoader /></div>
+                )}
                 <Badge
                     variant={available ? "default" : "destructive"}
                     className="absolute top-2 right-2"

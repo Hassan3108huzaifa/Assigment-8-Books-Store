@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import { poppins } from '@/app/ui/fonts'
 import BookCard from './BookCard'
+import Loader from './Loader'
+import ExploreButton from '@/components/ExploreButton'
+import { useRouter } from 'next/navigation'
 
 interface Book {
     id: number
@@ -13,6 +16,9 @@ interface Book {
 }
 
 const Books = () => {
+
+    const route = useRouter()
+
     const [books, setBooks] = useState<Book[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -36,7 +42,11 @@ const Books = () => {
     }, [])
 
     if (loading) {
-        return <div className="text-center">Loading...</div>
+        return <div className="max-w-7xl mx-auto py-12">
+            <div className="w-full flex justify-center">
+                <Loader />
+            </div>
+        </div>
     }
 
     return (
@@ -45,10 +55,13 @@ const Books = () => {
                 Explore Our Books
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {books.map((book) => (
+                {[...books].reverse().slice(0, 8).map((book) => (
                     <BookCard key={book.id} {...book} />
                 ))}
             </div>
+                <div onClick={()=> route.push('/books')} className='pt-12'>
+                    <ExploreButton/>
+                </div>
         </div>
     )
 }
